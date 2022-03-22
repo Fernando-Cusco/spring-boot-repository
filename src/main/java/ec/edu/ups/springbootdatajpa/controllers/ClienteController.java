@@ -6,9 +6,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -36,6 +39,8 @@ import ec.edu.ups.springbootdatajpa.utils.paginator.PageRender;
 @SessionAttributes("cliente")
 public class ClienteController {
     
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private IClienteService clienteService;
 
@@ -78,14 +83,15 @@ public class ClienteController {
             return "form";
         }
         if (!foto.isEmpty()) {
-            Path directorio = Paths.get("src//main//resources//static//uploads");
-            String rootPath = directorio.toFile().getAbsolutePath();
+            String unique = UUID.randomUUID().toString().concat("_").concat(foto.getOriginalFilename());
+            Path rootPath = Paths.get("uploads").resolve(unique);
+            Path rootAbsouPath = rootPath.toAbsolutePath();
+            log.info("root path: "+rootPath.toString());
+            log.info("absolute path: "+rootAbsouPath.toString());
             try {
-                byte[] bytes = foto.getBytes();
-                Path ruta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
-                Files.write(ruta, bytes );
+                Files.copy(foto.getInputStream(), rootAbsouPath);
                 flash.addFlashAttribute("info", "Se ha subido correctamente el archivo");
-                cliente.setFoto(foto.getOriginalFilename());
+                cliente.setFoto(unique);
             } catch (IOException exception) {
 
             }
