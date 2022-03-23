@@ -11,14 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    // private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        WebMvcConfigurer.super.addResourceHandlers(registry);
-        String resourcesPath = Paths.get("uploads").toAbsolutePath().toUri().toString();
-        log.info(resourcesPath);
-        registry.addResourceHandler("/uploads/**")
-        .addResourceLocations(resourcesPath);
-    }
+    // @Override
+    // public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    //     WebMvcConfigurer.super.addResourceHandlers(registry);
+    //     String resourcesPath = Paths.get("uploads").toAbsolutePath().toUri().toString();
+    //     log.info(resourcesPath);
+    //     registry.addResourceHandler("/uploads/**")
+    //     .addResourceLocations(resourcesPath);
+    // }
 }
