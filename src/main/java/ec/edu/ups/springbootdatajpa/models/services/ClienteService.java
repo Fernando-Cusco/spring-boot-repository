@@ -9,13 +9,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ec.edu.ups.springbootdatajpa.models.dao.IClienteRepository;
+import ec.edu.ups.springbootdatajpa.models.dao.IFacturaRepository;
+import ec.edu.ups.springbootdatajpa.models.dao.IProductoRepository;
 import ec.edu.ups.springbootdatajpa.models.entity.Cliente;
+import ec.edu.ups.springbootdatajpa.models.entity.Factura;
+import ec.edu.ups.springbootdatajpa.models.entity.Producto;
 
 @Service
 public class ClienteService implements IClienteService{
 
     @Autowired
     private IClienteRepository clienteRepository;
+
+    @Autowired
+    private IProductoRepository productoRepository;
+
+    @Autowired
+    private IFacturaRepository facturaRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -47,5 +57,22 @@ public class ClienteService implements IClienteService{
     public Page<Cliente> findAll(Pageable pageable) {
         return clienteRepository.findAll(pageable);
     }
-    
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findByNombre(String nombre) {
+        return productoRepository.findByNombreLikeIgnoreCase("%"+nombre+"%");
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void saveFactura(Factura factura) {
+        facturaRepository.save(factura);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Producto findProductoById(Long id) {
+        return productoRepository.findById(id).orElse(null);
+    }   
 }

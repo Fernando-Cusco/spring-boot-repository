@@ -9,6 +9,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Detalle Cliente</h4>
+                <a class="btn btn-warning btn-xs" th:href="@{/factura/form/}+${cliente.id}">Crear factura</a>
             </div>
             <div class="card-body">
                 <img th:if="${#strings.length(cliente.foto) > 0}" class="img-thumbnail rounded float-left" style="max-width: 25%;" th:src="@{'/uploads/'+${cliente.foto}}" th:alt="${cliente.foto}">
@@ -18,6 +19,28 @@
                     <li class="list-group-item" th:text="'Email: '+${cliente.email}"></li>
                     <li class="list-group-item" th:text="'Fecha: '+${cliente.createAt}"></li>
                 </ul>
+                <div th:if="${#lists.isEmpty(cliente.facturas)}" class="alert alert-info my-4" th:text="'No hay facturas disponibles.'">
+
+                </div>
+                <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-striped my-4">
+                    <thead>
+                        <tr>
+                            <th>folio</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="factura : ${cliente.facturas}">
+                            <td th:text="${factura.id}"></td>
+                            <td th:text="${factura.descripcion}"></td>
+                            <td th:text="${factura.createAt}"></td>
+                            <td th:text="${factura.calcularTotal()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>

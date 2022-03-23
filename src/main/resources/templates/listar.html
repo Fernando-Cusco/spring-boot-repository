@@ -22,7 +22,9 @@
               <th>Apellidos</th>
               <th>Email</th>
               <th>CreateAt</th>
-              <th>Acciones</th>
+              <th>Facturas</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -35,7 +37,12 @@
               <td th:text="${cliente.email}"></td>
               <td th:text="${cliente.createAt}"></td>
               <td>
-                <a class="btn btn-info btn-xs" th:href="@{/form/}+${cliente.id}">Editar</a>
+                <a class="btn btn-success btn-xs" th:href="@{/factura/form/}+${cliente.id}">Crear factura</a>
+              </td>
+              <td>
+                <a class="btn btn-warning btn-xs" th:href="@{/form/}+${cliente.id}">Editar</a>
+              </td>
+              <td>
                 <a class="btn btn-danger btn-xs" th:href="@{/eliminar/}+${cliente.id}"
                 onclick="return confirm('seguro queires eliminar');">Eliminar</a>
               </td>
