@@ -74,5 +74,17 @@ public class ClienteService implements IClienteService{
     @Transactional(readOnly = true)
     public Producto findProductoById(Long id) {
         return productoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Factura findFacturaById(Long id) {
+        return facturaRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteFactura(Long id) {
+        facturaRepository.deleteById(id);
     }   
 }

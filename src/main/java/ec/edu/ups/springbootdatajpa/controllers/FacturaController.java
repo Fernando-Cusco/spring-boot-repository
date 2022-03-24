@@ -77,5 +77,30 @@ public class FacturaController {
         flash.addFlashAttribute("success", "Factura guardada con éxito");
         return "redirect:/detalle/" + factura.getCliente().getId();
     }
+
+    @GetMapping("/ver/{id}")
+    public String ver(@PathVariable Long id, Model model, RedirectAttributes flash) {
+        Factura factura = clienteService.findFacturaById(id);
+        if (factura == null) {
+            flash.addFlashAttribute("danger", "La factura no existe");
+            return "redirect:/listar";
+        }
+        model.addAttribute("titulo", "Factura: ".concat(factura.getDescripcion()));
+        model.addAttribute("factura", factura);
+        return "factura/ver";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Long id, Model model, RedirectAttributes flash) {
+        Factura factura = clienteService.findFacturaById(id);
+        if (factura != null) {
+            clienteService.deleteFactura(id);
+            flash.addFlashAttribute("success", "Factura eliminada con éxito");
+            return "redirect:/detalle/" + factura.getCliente().getId();
+        } else {
+            flash.addFlashAttribute("danger", "La factura no existe");
+            return "redirect:/listar";
+        }
+    }
     
 }
