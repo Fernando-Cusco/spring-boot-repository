@@ -86,5 +86,16 @@ public class ClienteService implements IClienteService{
     @Transactional(readOnly = false)
     public void deleteFactura(Long id) {
         facturaRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Factura fecthByIdWithClienteWithItemFacturaWithProducto(Long id) {
+        return facturaRepository.fecthByIdWithClienteWithItemFacturaWithProducto(id);
+    }
+
+    @Override
+    public Cliente fetchByIdWithFacturas(Long id) {
+        return clienteRepository.fetchByIdWithFacturas(id);
     }   
 }

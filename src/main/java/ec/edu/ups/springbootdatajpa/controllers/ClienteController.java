@@ -157,7 +157,8 @@ public class ClienteController {
 
     @GetMapping("/detalle/{id}")
     public String verFoto(@PathVariable("id") Long id, Model model, RedirectAttributes flash) {
-        Cliente cliente = clienteService.findOne(id);
+        // Cliente cliente = clienteService.findOne(id);
+        Cliente cliente = clienteService.fetchByIdWithFacturas(id);
         if (cliente == null) {
             flash.addFlashAttribute("danger", "El cliente no existe en la base de datos");
             return "redirect:/listar";

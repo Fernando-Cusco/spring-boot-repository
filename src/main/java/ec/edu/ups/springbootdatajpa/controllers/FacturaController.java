@@ -80,7 +80,8 @@ public class FacturaController {
 
     @GetMapping("/ver/{id}")
     public String ver(@PathVariable Long id, Model model, RedirectAttributes flash) {
-        Factura factura = clienteService.findFacturaById(id);
+        // Factura factura = clienteService.findFacturaById(id);
+        Factura factura = clienteService.fecthByIdWithClienteWithItemFacturaWithProducto(id);
         if (factura == null) {
             flash.addFlashAttribute("danger", "La factura no existe");
             return "redirect:/listar";
